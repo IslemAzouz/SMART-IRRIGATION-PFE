@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord d'Irrigation Intelligente</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tableau de Bord d'Irrigation Intelligente</h1>
+            <p class="subtitle">Système de surveillance en temps réel</p>
+        </header>
+<div class="pump-control">
+    <span class="label">Contrôle de la Pompe :</span>
+    <span id="pompe-status" class="status">Éteinte</span>
+    <button id="toggle-pompe">Allumer la Pompe</button>
+</div>
+<div id="pump-timer" class="pump-timer">Temps de fonctionnement : 0s</div>
+        <div class="dashboard">
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Données d'Humidité</h2>
+                    <div class="card-value" id="current-humidity">--</div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Valeur (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="humidity-table">
+                            <tr>
+                                <td colspan="2">Chargement des données...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>Données de Température</h2>
+                    <div class="card-value" id="current-temperature">--</div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Valeur (°C)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="temperature-table">
+                            <tr>
+                                <td colspan="2">Chargement des données...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
