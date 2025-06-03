@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Tableau de Bord d'Irrigation Intelligente</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
@@ -14,14 +14,16 @@
             <h1>Tableau de Bord d'Irrigation Intelligente</h1>
             <p class="subtitle">Système de surveillance en temps réel</p>
         </header>
-<div class="pump-control">
-    <span class="label">Contrôle de la Pompe :</span>
-    <span id="pompe-status" class="status">Éteinte</span>
-    <button id="toggle-pompe">Allumer la Pompe</button>
-</div>
-<div id="pump-timer" class="pump-timer">Temps de fonctionnement : 0s</div>
+
+        <div class="pump-control">
+            <span class="label">Contrôle de la Pompe :</span>
+            <span id="pompe-status" class="status">Éteinte</span>
+            <button id="toggle-pompe">Allumer la Pompe</button>
+        </div>
+        <div id="pump-timer" class="pump-timer">Temps de fonctionnement : 0s</div>
+
         <div class="dashboard">
-            
+            <!-- Humidité -->
             <div class="card">
                 <div class="card-header">
                     <h2>Données d'Humidité</h2>
@@ -36,14 +38,13 @@
                             </tr>
                         </thead>
                         <tbody id="humidity-table">
-                            <tr>
-                                <td colspan="2">Chargement des données...</td>
-                            </tr>
+                            <tr><td colspan="2">Chargement des données...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
+            <!-- Température -->
             <div class="card">
                 <div class="card-header">
                     <h2>Données de Température</h2>
@@ -58,9 +59,28 @@
                             </tr>
                         </thead>
                         <tbody id="temperature-table">
+                            <tr><td colspan="2">Chargement des données...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Humidité du Sol -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Données d’Humidité du Sol</h2>
+                    <div class="card-value" id="current-soilmoisture">--</div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
                             <tr>
-                                <td colspan="2">Chargement des données...</td>
+                                <th>Date</th>
+                                <th>Valeur (%)</th>
                             </tr>
+                        </thead>
+                        <tbody id="soilmoisture-table">
+                            <tr><td colspan="2">Chargement des données...</td></tr>
                         </tbody>
                     </table>
                 </div>
