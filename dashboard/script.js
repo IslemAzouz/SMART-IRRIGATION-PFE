@@ -31,10 +31,20 @@ function updateHumidityTable(data) {
   if (!data) return;
   humidityTable.innerHTML = '';
 
-  const entries = Object.entries(data).map(([_, value]) => ({
-    timestamp: value.timestamp || Date.now(),
-    value: value.value || value
-  })).sort((a, b) => b.timestamp - a.timestamp);
+  const entries = Object.entries(data).map(([key, value]) => {
+    const parts = key.split('_');
+    const year = 2000 + parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const day = parseInt(parts[2], 10);
+    const hour = parseInt(parts[3], 10);
+    const minute = parseInt(parts[4], 10);
+    const second = parseInt(parts[5], 10);
+    const date = new Date(year, month, day, hour, minute, second);
+    return {
+      timestamp: date.getTime(),
+      value: value
+    };
+  }).sort((a, b) => b.timestamp - a.timestamp);
 
   if (entries.length > 0) {
     currentHumidity.textContent = `${entries[0].value}%`;
@@ -56,10 +66,20 @@ function updateTemperatureTable(data) {
   if (!data) return;
   temperatureTable.innerHTML = '';
 
-  const entries = Object.entries(data).map(([_, value]) => ({
-    timestamp: value.timestamp || Date.now(),
-    value: value.value || value
-  })).sort((a, b) => b.timestamp - a.timestamp);
+  const entries = Object.entries(data).map(([key, value]) => {
+    const parts = key.split('_');
+    const year = 2000 + parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const day = parseInt(parts[2], 10);
+    const hour = parseInt(parts[3], 10);
+    const minute = parseInt(parts[4], 10);
+    const second = parseInt(parts[5], 10);
+    const date = new Date(year, month, day, hour, minute, second);
+    return {
+      timestamp: date.getTime(),
+      value: value
+    };
+  }).sort((a, b) => b.timestamp - a.timestamp);
 
   if (entries.length > 0) {
     currentTemperature.textContent = `${entries[0].value}°C`;
@@ -77,7 +97,6 @@ function updateTemperatureTable(data) {
   }
 }
 
-// Listen for humidity and temperature data
 database.ref('humidity').on('value', (snapshot) => {
   updateHumidityTable(snapshot.val());
 });
@@ -86,7 +105,6 @@ database.ref('temperature').on('value', (snapshot) => {
   updateTemperatureTable(snapshot.val());
 });
 
-// Listen for connection state
 database.ref('.info/connected').on('value', (snapshot) => {
   if (snapshot.val() === false) {
     currentHumidity.textContent = '--';
@@ -96,7 +114,6 @@ database.ref('.info/connected').on('value', (snapshot) => {
   }
 });
 
-// Pompe logic
 function updatePompeDisplay(status) {
   if (status === 'on') {
     pompeStatus.textContent = 'Allumée';
@@ -114,7 +131,6 @@ togglePompeBtn.addEventListener('click', () => {
   database.ref('pompe').set({ status: newStatus });
 });
 
-// Timer logic
 let pumpStartTime = null;
 let pumpTimerInterval = null;
 
@@ -127,7 +143,6 @@ function formatElapsed(seconds) {
 
 function startPumpTimer() {
   pumpStartTime = Date.now();
-
   pumpTimerInterval = setInterval(() => {
     const elapsed = Math.floor((Date.now() - pumpStartTime) / 1000);
     pumpTimer.textContent = `Temps de fonctionnement : ${formatElapsed(elapsed)}`;
@@ -140,11 +155,9 @@ function stopPumpTimer() {
   pumpTimer.textContent = '';
 }
 
-// Listen for pompe status and handle timer
 database.ref('pompe/status').on('value', (snapshot) => {
   const status = snapshot.val() || 'off';
   updatePompeDisplay(status);
-
   if (status === 'on') {
     startPumpTimer();
   } else {
